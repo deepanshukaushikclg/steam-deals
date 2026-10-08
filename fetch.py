@@ -1,7 +1,7 @@
 import json, math, re, time, urllib.request, urllib.parse, datetime
 
 LIMIT_INR = 250      # "Under" section ceiling
-PAGES = 3            # CheapShark pages of 60 deals (polite: 1s pause between)
+PAGES = 25   # up to 1500 deals
 
 def get(url):
     req = urllib.request.Request(
@@ -115,6 +115,8 @@ try:
                           "metacritic": posint(d.get("metacriticScore")),
                           "deal_score": score,
                           "est_rarity": est_rarity(reviews)})
+        if len(deals) < 60:
+            break
         time.sleep(1)
 except Exception as e:
     print("CheapShark failed:", e)
