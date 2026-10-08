@@ -1,4 +1,4 @@
-import json, math, re, time, urllib.error, urllib.request, urllib.parse, datetime
+import html as htmllib, json, math, re, time, urllib.error, urllib.request, urllib.parse, datetime
 
 GAMERPOWER_URL = "https://www.gamerpower.com/api/giveaways?platform=steam&type=game"
 LIMIT_INR = 250      # "Under" section ceiling
@@ -139,6 +139,51 @@ def steam_inr(appids):
         time.sleep(1.5)
     return out, answered
 
+# Steam's own India store search (specials only, cheapest first) as the main candidate source
+def steam_search(max_pages=120, count=50):
+    found, start = {}, 0
+    for _ in range(max_pages):
+        try:
+            d = get("https://store.steampowered.com/search/results/?" + urllib.parse.urlencode(
+                {"query": "", "start": start, "count": count, "specials": 1, "cc": "in", "l": "english",
+                 "sort_by": "Price_ASC", "category1": 998, "infinite": 1}))
+        except Exception as e:
+            print("steam search failed:", e); break
+        page = d.get("results_html") or ""
+        rows = [r for r in re.split(r'(?=<a [^>]*data-ds-appid=)', page) if "data-ds-appid" in r]
+        if not rows:
+            break
+        prices = []
+        for r in rows:
+            m = re.search(r'data-ds-appid="(\d+)', r)
+            if not m:
+                continue
+            t = re.search(r'<span class="title">(.*?)</span>', r, re.S)
+            p = re.search(r'data-price-final="(\d+)"', r)
+            if p and int(p.group(1)) > 0:
+                prices.append(int(p.group(1)) / 100)
+            found.setdefault(m.group(1), htmllib.unescape(t.group(1)).strip() if t else None)
+        print("  steam search %d results, %d candidates" % (start + len(rows), len(found)), flush=True)
+        if prices and min(prices) > LIMIT_INR:   # sorted by price: nothing cheaper follows
+            break
+        start += count
+        if start >= (d.get("total_count") or 0):
+            break
+        time.sleep(1.5)
+    return found
+
+by_app = {c["id"][3:] for c in cheap}
+steam_only = set()
+for aid, title in steam_search().items():
+    if aid in by_app or not title:
+        continue
+    steam_only.add(aid)
+    cheap.append({"id": "cs-" + aid, "title": title,
+                  "price_inr": 0, "sale_inr": 0, "off": 0, "savings_inr": 0,
+                  "image": "https://cdn.akamai.steamstatic.com/steam/apps/%s/header.jpg" % aid,
+                  "url": "https://store.steampowered.com/app/" + aid})
+print("candidates:", len(cheap), "(%d from Steam search only)" % len(steam_only))
+
 prices, answered = steam_inr([c["id"][3:] for c in cheap])
 final = []
 for c in cheap:
@@ -150,7 +195,7 @@ for c in cheap:
             continue
         c.update(price_inr=round(init), sale_inr=round(fin), off=po["discount_percent"],
                  savings_inr=round(init - fin), price_source="steam_in")
-    elif aid in answered or c["sale_inr"] > LIMIT_INR:
+    elif aid in steam_only or aid in answered or c["sale_inr"] > LIMIT_INR:
         continue      # Steam India has no price for it, or converted price too high
     else:
         c["price_source"] = "converted"   # Steam request failed: keep USD conversion
