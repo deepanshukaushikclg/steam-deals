@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: python fetch.py
       - run: python notify.py
+        continue-on-error: true
         env:
           MAIL_USER: ${{ secrets.MAIL_USER }}
           MAIL_PASS: ${{ secrets.MAIL_PASS }}
