@@ -1,6 +1,6 @@
 import json, re, urllib.request, urllib.parse, datetime
 
-LIMIT_INR = 150
+LIMIT_INR = 250
 
 def get(url):
     req = urllib.request.Request(url, headers={"User-Agent": "freegames-site/1.0"})
