@@ -3,9 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Steam Deals Tracker</title>
-
+<title>Steam deals tracker</title>
 <style>
   :root { --bg:#0e141b; --panel:#17202b; --card:#1d2938; --ink:#e8eef5; --mute:#8fa1b3;
           --green:#a4d007; --greenbg:#4c6b22; --blue:#66c0f4; --tag:#2a475e; }
@@ -73,20 +71,13 @@
   @media (prefers-reduced-motion:reduce) { .item { transition:none; } }
 </style>
 </head>
-
-
 <body>
-
 <header>
-
   <div class="bar">
     <div class="logo">Steam <span>Deals</span></div>
     <nav class="nav"><a href="#free">100% OFF</a><a href="#cheap" id="nav-cheap">Under ₹250</a></nav>
   </div>
-
 </header>
-
-
 <main>
   <div class="head"><h2 id="free">100% OFF</h2><span class="meta"><span id="free-count"></span> <span id="updated">Loading…</span></span></div>
   <div id="free-ui"></div>
@@ -97,13 +88,11 @@
   <div class="grid" id="cheap-grid"></div>
 
   <footer>
-    <p>Prices converted from USD; Steam India may differ slightly. Sorting and filters are saved in this browser and apply to each section separately.</p>
+    <p>Prices are Steam India (INR) where available; otherwise converted from USD. Sorting and filters are saved in this browser and apply to each section separately.</p>
     <p>Sources: GamerPower (free giveaways, claim counts, end dates) and CheapShark (Steam prices, ratings, Metacritic, release dates). "Deal started" is when CheapShark last saw the price change.</p>
     <p><b>Estimated Rarity</b> is not an official metric: 100 × (1 − log₁₀(1 + Steam reviews) ÷ 5), so fewer reviews means higher rarity and 100,000+ reviews scores 0. Games with no review data have no score.</p>
   </footer>
 </main>
-
-
 <script>
 const KEY = "steamdeals.prefs.v1";
 const fmt = n => "₹" + n.toLocaleString("en-IN");
@@ -369,7 +358,6 @@ function draw(el, list, st, total) {
     img.src = g.image || ""; img.alt = g.title;
     img.onerror = () => { img.style.visibility = "hidden"; };
     el.appendChild(a);
-
   });
 }
 
@@ -382,6 +370,5 @@ fetch("data.json", { cache:"no-store" }).then(r => r.json()).then(d => {
   Section("cheap", d.cheap || [], "orig_desc", limit);
 }).catch(() => document.getElementById("updated").textContent = "Could not load data.json");
 </script>
-
 </body>
 </html>
