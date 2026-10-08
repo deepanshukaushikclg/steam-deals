@@ -1,1 +1,500 @@
-{"updated":"2026-01-01T00:00:00Z","limit_inr":150,"free":[],"cheap":[]}
+{
+ "updated": "2026-10-08T04:27:21.306629Z",
+ "limit_inr": 150,
+ "free": [
+  {
+   "title": "Dwarven Realms (Steam) Key Giveaway",
+   "price_inr": 967,
+   "image": "https://www.gamerpower.com/offers/1b/6a59119a8eb8d.jpg",
+   "url": "https://www.gamerpower.com/open/dwarven-realms-steam-key-giveaway"
+  },
+  {
+   "title": "Spooky Cats Steam Key Giveaway",
+   "price_inr": 290,
+   "image": "https://www.gamerpower.com/offers/1b/6ac6201af0cf6.jpg",
+   "url": "https://www.gamerpower.com/open/spooky-cats-steam-key-giveaway"
+  }
+ ],
+ "cheap": [
+  {
+   "title": "Overcast - Walden and the Werewolf",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/293180/header.jpg",
+   "url": "https://store.steampowered.com/app/293180"
+  },
+  {
+   "title": "Dead Bits",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/303390/header.jpg",
+   "url": "https://store.steampowered.com/app/303390"
+  },
+  {
+   "title": "Eron",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/356880/header.jpg",
+   "url": "https://store.steampowered.com/app/356880"
+  },
+  {
+   "title": "UBERMOSH",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/357070/header.jpg",
+   "url": "https://store.steampowered.com/app/357070"
+  },
+  {
+   "title": "Red Lake",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/357290/header.jpg",
+   "url": "https://store.steampowered.com/app/357290"
+  },
+  {
+   "title": "The Undying Plague",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/349440/header.jpg",
+   "url": "https://store.steampowered.com/app/349440"
+  },
+  {
+   "title": "The Sheltered",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/364370/header.jpg",
+   "url": "https://store.steampowered.com/app/364370"
+  },
+  {
+   "title": "Alter World",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/357280/header.jpg",
+   "url": "https://store.steampowered.com/app/357280"
+  },
+  {
+   "title": "Tachyon Project",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/385860/header.jpg",
+   "url": "https://store.steampowered.com/app/385860"
+  },
+  {
+   "title": "Lift It",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/402220/header.jpg",
+   "url": "https://store.steampowered.com/app/402220"
+  },
+  {
+   "title": "KRUM - Edge Of Darkness",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/420210/header.jpg",
+   "url": "https://store.steampowered.com/app/420210"
+  },
+  {
+   "title": "ShipLord",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/422250/header.jpg",
+   "url": "https://store.steampowered.com/app/422250"
+  },
+  {
+   "title": "Eight Mini Racers",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/434890/header.jpg",
+   "url": "https://store.steampowered.com/app/434890"
+  },
+  {
+   "title": "UBERMOSH:BLACK",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/444940/header.jpg",
+   "url": "https://store.steampowered.com/app/444940"
+  },
+  {
+   "title": "Rock 'N' Roll Defense",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/438480/header.jpg",
+   "url": "https://store.steampowered.com/app/438480"
+  },
+  {
+   "title": "Asteroid Bounty Hunter",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/444220/header.jpg",
+   "url": "https://store.steampowered.com/app/444220"
+  },
+  {
+   "title": "Sixtieth Kilometer",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/448780/header.jpg",
+   "url": "https://store.steampowered.com/app/448780"
+  },
+  {
+   "title": "Red Risk",
+   "price_inr": 483,
+   "sale_inr": 47,
+   "off": 90,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/448070/header.jpg",
+   "url": "https://store.steampowered.com/app/448070"
+  },
+  {
+   "title": "Volt",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/290280/header.jpg",
+   "url": "https://store.steampowered.com/app/290280"
+  },
+  {
+   "title": "Stranded",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/295250/header.jpg",
+   "url": "https://store.steampowered.com/app/295250"
+  },
+  {
+   "title": "Smooth Operators",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/262900/header.jpg",
+   "url": "https://store.steampowered.com/app/262900"
+  },
+  {
+   "title": "Gunship!",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/286730/header.jpg",
+   "url": "https://store.steampowered.com/app/286730"
+  },
+  {
+   "title": "Sinister City",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/326180/header.jpg",
+   "url": "https://store.steampowered.com/app/326180"
+  },
+  {
+   "title": "Phoenix Force",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/332480/header.jpg",
+   "url": "https://store.steampowered.com/app/332480"
+  },
+  {
+   "title": "Retention",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/339470/header.jpg",
+   "url": "https://store.steampowered.com/app/339470"
+  },
+  {
+   "title": "samurai_jazz",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/346450/header.jpg",
+   "url": "https://store.steampowered.com/app/346450"
+  },
+  {
+   "title": "Darkness Assault",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/332790/header.jpg",
+   "url": "https://store.steampowered.com/app/332790"
+  },
+  {
+   "title": "Shin Samurai Jazz",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/354970/header.jpg",
+   "url": "https://store.steampowered.com/app/354970"
+  },
+  {
+   "title": "An Imp? A Fiend!",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/354960/header.jpg",
+   "url": "https://store.steampowered.com/app/354960"
+  },
+  {
+   "title": "Make it indie!",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/357900/header.jpg",
+   "url": "https://store.steampowered.com/app/357900"
+  },
+  {
+   "title": "The Way of the Pixelated Fist",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/365340/header.jpg",
+   "url": "https://store.steampowered.com/app/365340"
+  },
+  {
+   "title": "Rolling Shapes",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/371280/header.jpg",
+   "url": "https://store.steampowered.com/app/371280"
+  },
+  {
+   "title": "Tcheco in the Castle of Lucio",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/377600/header.jpg",
+   "url": "https://store.steampowered.com/app/377600"
+  },
+  {
+   "title": "Botology",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/363610/header.jpg",
+   "url": "https://store.steampowered.com/app/363610"
+  },
+  {
+   "title": "Incandescent",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/380550/header.jpg",
+   "url": "https://store.steampowered.com/app/380550"
+  },
+  {
+   "title": "The Apotheosis Project",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/364350/header.jpg",
+   "url": "https://store.steampowered.com/app/364350"
+  },
+  {
+   "title": "My Bones",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/389700/header.jpg",
+   "url": "https://store.steampowered.com/app/389700"
+  },
+  {
+   "title": "Trigonarium",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/394030/header.jpg",
+   "url": "https://store.steampowered.com/app/394030"
+  },
+  {
+   "title": "Timberman",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/398710/header.jpg",
+   "url": "https://store.steampowered.com/app/398710"
+  },
+  {
+   "title": "Project Tarvotan",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/388660/header.jpg",
+   "url": "https://store.steampowered.com/app/388660"
+  },
+  {
+   "title": "The Adventures of Fatman",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/395250/header.jpg",
+   "url": "https://store.steampowered.com/app/395250"
+  },
+  {
+   "title": "VERGE:Lost chapter",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/400740/header.jpg",
+   "url": "https://store.steampowered.com/app/400740"
+  },
+  {
+   "title": "Sir! I'd Like To Report A Bug!",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/393240/header.jpg",
+   "url": "https://store.steampowered.com/app/393240"
+  },
+  {
+   "title": "Murder",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/404080/header.jpg",
+   "url": "https://store.steampowered.com/app/404080"
+  },
+  {
+   "title": "Tick Tock Isle",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/418440/header.jpg",
+   "url": "https://store.steampowered.com/app/418440"
+  },
+  {
+   "title": "The Consuming Shadow",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/403830/header.jpg",
+   "url": "https://store.steampowered.com/app/403830"
+  },
+  {
+   "title": "Chronostorm: Siberian Border",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/361890/header.jpg",
+   "url": "https://store.steampowered.com/app/361890"
+  },
+  {
+   "title": "Office Battle",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/394870/header.jpg",
+   "url": "https://store.steampowered.com/app/394870"
+  },
+  {
+   "title": "Corgi Warlock",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/414920/header.jpg",
+   "url": "https://store.steampowered.com/app/414920"
+  },
+  {
+   "title": "Suits: A Business RPG",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/410670/header.jpg",
+   "url": "https://store.steampowered.com/app/410670"
+  },
+  {
+   "title": "White Mirror",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/428630/header.jpg",
+   "url": "https://store.steampowered.com/app/428630"
+  },
+  {
+   "title": "PulseCharge",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/438010/header.jpg",
+   "url": "https://store.steampowered.com/app/438010"
+  },
+  {
+   "title": "It's Spring Again",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/434210/header.jpg",
+   "url": "https://store.steampowered.com/app/434210"
+  },
+  {
+   "title": "Lamia's Game Room",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/434680/header.jpg",
+   "url": "https://store.steampowered.com/app/434680"
+  },
+  {
+   "title": "Mindless Running",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/444260/header.jpg",
+   "url": "https://store.steampowered.com/app/444260"
+  },
+  {
+   "title": "Risky Rescue",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/439910/header.jpg",
+   "url": "https://store.steampowered.com/app/439910"
+  },
+  {
+   "title": "Dinosaur Hunt",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/401190/header.jpg",
+   "url": "https://store.steampowered.com/app/401190"
+  },
+  {
+   "title": "Cosmic Leap",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/420850/header.jpg",
+   "url": "https://store.steampowered.com/app/420850"
+  },
+  {
+   "title": "Bacteria",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/448470/header.jpg",
+   "url": "https://store.steampowered.com/app/448470"
+  },
+  {
+   "title": "CELLAR",
+   "price_inr": 96,
+   "sale_inr": 47,
+   "off": 51,
+   "image": "https://cdn.akamai.steamstatic.com/steam/apps/449060/header.jpg",
+   "url": "https://store.steampowered.com/app/449060"
+  }
+ ]
+}
