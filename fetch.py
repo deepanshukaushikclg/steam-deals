@@ -42,7 +42,7 @@ try:
                 continue
             seen_ids.add(app)
             cheap.append({"title": d["title"],
-                          "price_inr": round(normal * rate),
+                          "price_inr": round(normal * rate * 20),
                           "sale_inr": round(sale * rate),
                           "off": round((1 - sale / normal) * 100) if normal else 0,
                           "image": "https://cdn.akamai.steamstatic.com/steam/apps/%s/header.jpg" % app,
