@@ -33,7 +33,7 @@ cheap, seen_ids = [], set()
 try:
     for page in range(60):
         q = urllib.parse.urlencode({"storeID": 1, "onSale": 1, "pageSize": 60, "pageNumber": page,
-                                    "upperPrice": round(LIMIT_IN*6  / rate, 2), "sortBy": "Price"})
+                                    "upperPrice": round(LIMIT_INR * 6 / rate, 2), "sortBy": "Price"})
         rows = get("https://www.cheapshark.com/api/1.0/deals?" + q)
         for d in rows:
             sale, normal = float(d["salePrice"]), float(d["normalPrice"])
