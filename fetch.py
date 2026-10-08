@@ -21,7 +21,7 @@ try:
             continue
         m = re.search(r"[\d.]+", g.get("worth") or "")
         worth = float(m.group()) if m else 0.0
-        free.append({"title": re.sub(r"\s*\(Steam\)$", "", g["title"]),
+        free.append({"title": re.sub(r"\s*\(Steam\)( Giveaway)?$", "", g["title"]),
                      "price_inr": round(worth * rate),
                      "image": g.get("image") or g.get("thumbnail"),
                      "url": g["open_giveaway_url"]})
