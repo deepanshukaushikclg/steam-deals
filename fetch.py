@@ -1,24 +1,22 @@
-import json, math, re, time, urllib.request, urllib.parse, datetime
+import json, math, re, time, urllib.error, urllib.request, urllib.parse, datetime
 
+GAMERPOWER_URL = "https://www.gamerpower.com/api/giveaways?platform=steam&type=game"
 LIMIT_INR = 250      # "Under" section ceiling
-PAGES = 25   # up to 1500 deals
+# CheapShark serves ~50 pages (3000 deals) per query, so fetch in price bands (INR)
+BANDS_INR = [0, 20, 30, 40, 50, 60, 70, 80, 100, 125, 150, 200, LIMIT_INR]
+MAX_PAGES = 55
+PAUSE = 0.6
 
 def get(url):
-    req = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": "freegames-site/1.0",
-            "Accept": "application/json"
-        }
-    )
-
+    req = urllib.request.Request(url, headers={"User-Agent": "freegames-site/1.0",
+                                               "Accept": "application/json"})
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.load(r)
 
 def iso_unix(ts):
     try:
         ts = int(ts)
-        return datetime.datetime.utcfromtimestamp(ts).strftime("%Y-%m-%dT%H:%M:%SZ") if ts > 0 else None
+        return datetime.datetime.fromtimestamp(ts, datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ") if ts > 0 else None
     except Exception:
         return None
 
@@ -44,29 +42,17 @@ def est_rarity(review_count):
     return round(100 * max(0.0, 1 - math.log10(1 + review_count) / 5), 1)
 
 # USD -> INR
-# ============================================================
-
 try:
-    currency_data = get("https://open.er-api.com/v6/latest/USD")
-    rate = float(currency_data["rates"]["INR"])
+    rate = float(get("https://open.er-api.com/v6/latest/USD")["rates"]["INR"])
 except Exception as e:
     print("Exchange rate failed:", e)
     rate = 88.0
-
 print("USD -> INR:", rate)
 
-
-# ============================================================
-# FREE GAMES
-# ============================================================
-
+# Free right now (Steam giveaways, "worth" = original price in USD)
 free = []
-
 try:
-    giveaways = get(GAMERPOWER_URL)
-
-    for g in giveaways:
-
+    for g in get(GAMERPOWER_URL):
         if g.get("status") != "Active":
             continue
         m = re.search(r"[\d.]+", g.get("worth") or "")
@@ -84,18 +70,29 @@ except Exception as e:
 
 # Paid games on sale at or below LIMIT_INR (Steam store = CheapShark storeID 1)
 cheap, ids = [], set()
-try:
-    for page in range(PAGES):
+for lo, hi in zip(BANDS_INR, BANDS_INR[1:]):
+    n_band = 0
+    for page in range(MAX_PAGES):
         q = urllib.parse.urlencode({"storeID": 1, "onSale": 1, "pageSize": 60, "pageNumber": page,
-                                    "upperPrice": round(LIMIT_INR / rate, 2), "sortBy": "Price"})
-        deals = get("https://www.cheapshark.com/api/1.0/deals?" + q)
+                                    "lowerPrice": round(lo / rate, 2), "upperPrice": round(hi / rate, 2),
+                                    "sortBy": "Price"})
+        try:
+            deals = get("https://www.cheapshark.com/api/1.0/deals?" + q)
+        except urllib.error.HTTPError as e:
+            if e.code == 400 and page > 0:   # CheapShark page limit reached
+                if page >= 50:
+                    print("  band ₹%d-%d hit CheapShark's page limit; split it into smaller bands" % (lo, hi))
+                break
+            print("CheapShark failed:", e); break
+        except Exception as e:
+            print("CheapShark failed:", e); break
         if not deals:
             break
         for d in deals:
             sale, normal = float(d["salePrice"]), float(d["normalPrice"])
             if sale <= 0 or not d.get("steamAppID") or d["dealID"] in ids:
                 continue
-            ids.add(d["dealID"])
+            ids.add(d["dealID"]); n_band += 1
             reviews = posint(d.get("steamRatingCount"))
             try:
                 score = float(d.get("dealRating")) or None
@@ -117,71 +114,17 @@ try:
                           "est_rarity": est_rarity(reviews)})
         if len(deals) < 60:
             break
-        time.sleep(1)
-except Exception as e:
-    print("CheapShark failed:", e)
+        time.sleep(PAUSE)
+    print("band ₹%d-%d: %d deals" % (lo, hi, n_band), flush=True)
 
+free.sort(key=lambda x: x["price_inr"], reverse=True)   # highest original value first
+cheap.sort(key=lambda x: x["sale_inr"])                  # cheapest sale price first
 
-# ============================================================
-# SORTING
-# ============================================================
+output = {"updated": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          "currency": {"from": "USD", "to": "INR", "rate": rate},
+          "limit_inr": LIMIT_INR, "free": free, "cheap": cheap}
 
-# Free games:
-# Highest original value first
-free.sort(
-    key=lambda x: x["price_inr"],
-    reverse=True
-)
+with open("data.json", "w", encoding="utf-8") as f:
+    json.dump(output, f, indent=2, ensure_ascii=False)
 
-# Paid games:
-# Cheapest sale price first
-cheap.sort(
-    key=lambda x: x["sale_inr"]
-)
-
-
-# ============================================================
-# OUTPUT
-# ============================================================
-
-output = {
-    "updated": datetime.datetime.now(
-        datetime.timezone.utc
-    ).isoformat(),
-
-    "currency": {
-        "from": "USD",
-        "to": "INR",
-        "rate": rate
-    },
-
-    "limit_inr": LIMIT_INR,
-
-    "free": free,
-
-    "cheap": cheap
-}
-
-
-with open(
-    "data.json",
-    "w",
-    encoding="utf-8"
-) as f:
-
-    json.dump(
-        output,
-        f,
-        indent=2,
-        ensure_ascii=False
-    )
-
-
-print()
-print("=" * 50)
-print("DONE")
-print("=" * 50)
-print("Free games:", len(free))
-print("Steam games under ₹250:", len(cheap))
-print("Exchange rate:", rate)
-print("Limit: ₹", LIMIT_INR)
+print("\nDONE\nFree games:", len(free), "\nSteam games under ₹%d:" % LIMIT_INR, len(cheap))
