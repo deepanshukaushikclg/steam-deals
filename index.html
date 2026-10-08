@@ -7,390 +7,70 @@
 <title>Steam Deals Tracker</title>
 
 <style>
-  :root {
-    --bg: #0e141b;
-    --panel: #17202b;
-    --card: #1d2938;
-    --ink: #e8eef5;
-    --mute: #8fa1b3;
-    --green: #a4d007;
-    --greenbg: #4c6b22;
-    --blue: #66c0f4;
-    --tag: #2a475e;
-    --border: #2b3b4d;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font: 15px/1.45 "Segoe UI", system-ui, -apple-system, sans-serif;
-  }
-
-  /* =========================
-     HEADER
-     ========================= */
-
-  header {
-    background: linear-gradient(#1b2838, #17202b);
-    border-bottom: 1px solid #000;
-  }
-
-  .bar {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 14px 16px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: .3px;
-  }
-
-  .logo span {
-    color: var(--blue);
-  }
-
-  .nav {
-    display: flex;
-    gap: 8px;
-  }
-
-  .nav a {
-    color: var(--ink);
-    text-decoration: none;
-
-    background: var(--tag);
-
-    padding: 6px 12px;
-    border-radius: 3px;
-
-    font-size: .9rem;
-
-    transition:
-      background .12s,
-      color .12s;
-  }
-
-  .nav a:hover,
-  .nav a:focus-visible {
-    background: var(--blue);
-    color: #0e141b;
-  }
-
-
-  /* =========================
-     MAIN
-     ========================= */
-
-  main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 8px 16px 48px;
-  }
-
-  .head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-
-    margin: 28px 0 12px;
-
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  h2 {
-    margin: 0;
-
-    font-size: 1.2rem;
-    font-weight: 600;
-
-    border-left: 4px solid var(--blue);
-    padding-left: 10px;
-  }
-
-  .meta {
-    color: var(--mute);
-    font-size: .85rem;
-  }
-
-
-  /* =========================
-     GAME GRID
-     ========================= */
-
-  .grid {
-    display: grid;
-
-    grid-template-columns:
-      repeat(auto-fill, minmax(230px, 1fr));
-
-    gap: 14px;
-  }
-
-
-  /* =========================
-     GAME CARD
-     ========================= */
-
-  .item {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-
-    background: var(--card);
-
-    border-radius: 4px;
-    overflow: hidden;
-
-    color: inherit;
-    text-decoration: none;
-
-    border: 1px solid var(--border);
-
-    transition:
-      transform .12s,
-      border-color .12s;
-  }
-
-  .item:hover,
-  .item:focus-visible {
-    transform: translateY(-3px);
-    border-color: var(--blue);
-  }
-
-  .item img {
-    width: 100%;
-
-    aspect-ratio: 460 / 215;
-
-    object-fit: cover;
-
-    background: #101922;
-
-    display: block;
-  }
-
-  .rank {
-    position: absolute;
-
-    top: 8px;
-    left: 8px;
-
-    background: rgba(0, 0, 0, .75);
-
-    color: #fff;
-
-    font-size: .75rem;
-    font-weight: 700;
-
-    padding: 2px 7px;
-
-    border-radius: 3px;
-
-    z-index: 2;
-  }
-
-
-  /* =========================
-     CARD BODY
-     ========================= */
-
-  .body {
-    padding: 10px 12px 12px;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 10px;
-
-    flex: 1;
-  }
-
-  .title {
-    font-weight: 600;
-
-    line-height: 1.3;
-
-    display: -webkit-box;
-
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-
-    overflow: hidden;
-
-    min-height: 2.6em;
-  }
-
-
-  /* =========================
-     PRICE
-     ========================= */
-
-  .buy {
-    margin-top: auto;
-
-    display: flex;
-
-    justify-content: flex-end;
-    align-items: stretch;
-
-    gap: 1px;
-  }
-
-  .off {
-    background: var(--greenbg);
-
-    color: var(--green);
-
-    font-weight: 700;
-    font-size: 1.05rem;
-
-    padding: 4px 8px;
-
-    display: flex;
-    align-items: center;
-
-    border-radius: 3px 0 0 3px;
-  }
-
-  .prices {
-    background: #0e141b;
-
-    padding: 2px 10px;
-
-    text-align: right;
-
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-
-    border-radius: 0 3px 3px 0;
-
-    min-width: 82px;
-  }
-
-  .prices s {
-    color: var(--mute);
-
-    font-size: .75rem;
-
-    line-height: 1.1;
-  }
-
-  .prices b {
-    color: var(--green);
-
-    font-size: .95rem;
-
-    line-height: 1.2;
-  }
-
-
-  /* =========================
-     EMPTY STATE
-     ========================= */
-
-  .empty {
-    color: var(--mute);
-
-    padding: 20px;
-
-    background: var(--panel);
-
-    border-radius: 4px;
-
-    grid-column: 1 / -1;
-  }
-
-
-  /* =========================
-     FOOTER
-     ========================= */
-
-  footer {
-    color: var(--mute);
-
-    font-size: .8rem;
-
-    margin-top: 32px;
-
-    line-height: 1.6;
-  }
-
-
-  /* =========================
-     MOBILE
-     ========================= */
-
-  @media (max-width: 520px) {
-
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .body {
-      padding: 8px;
-    }
-
-    .title {
-      font-size: .9rem;
-    }
-
-    .off {
-      font-size: .9rem;
-      padding: 4px 6px;
-    }
-
-    .prices {
-      padding: 2px 7px;
-      min-width: 70px;
-    }
-
-    .prices b {
-      font-size: .85rem;
-    }
-  }
-
-
-  /* =========================
-     REDUCED MOTION
-     ========================= */
-
-  @media (prefers-reduced-motion: reduce) {
-
-    html {
-      scroll-behavior: auto;
-    }
-
-    .item {
-      transition: none;
-    }
-
-    .nav a {
-      transition: none;
-    }
-  }
+  :root { --bg:#0e141b; --panel:#17202b; --card:#1d2938; --ink:#e8eef5; --mute:#8fa1b3;
+          --green:#a4d007; --greenbg:#4c6b22; --blue:#66c0f4; --tag:#2a475e; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font:15px/1.45 "Segoe UI", system-ui, -apple-system, sans-serif; }
+  header { background:linear-gradient(#1b2838,#17202b); border-bottom:1px solid #000; }
+  .bar { max-width:1100px; margin:0 auto; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .logo { font-size:1.25rem; font-weight:700; letter-spacing:.3px; }
+  .logo span { color:var(--blue); }
+  .nav { display:flex; gap:8px; }
+  .nav a { color:var(--ink); text-decoration:none; background:var(--tag); padding:6px 12px; border-radius:3px; font-size:.9rem; }
+  .nav a:hover, .nav a:focus-visible { background:var(--blue); color:#0e141b; }
+  main { max-width:1100px; margin:0 auto; padding:8px 16px 48px; }
+  .head { display:flex; align-items:baseline; justify-content:space-between; margin:28px 0 10px; gap:8px; flex-wrap:wrap; }
+  h2 { margin:0; font-size:1.2rem; font-weight:600; border-left:4px solid var(--blue); padding-left:10px; }
+  .meta { color:var(--mute); font-size:.85rem; }
+
+  /* toolbar */
+  .tb { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+  .tb select, .tb input, .panel select, .panel input { background:#0e141b; color:var(--ink); border:1px solid #2b3b4d; border-radius:3px; padding:5px 8px; font:inherit; font-size:.85rem; }
+  .tb input, .panel input { width:84px; }
+  .sortl { color:var(--mute); font-size:.85rem; display:flex; align-items:center; gap:6px; }
+  .fb { display:flex; gap:6px; flex-wrap:wrap; flex:1; }
+  button { font:inherit; font-size:.85rem; color:var(--ink); background:var(--tag); border:1px solid transparent; border-radius:3px; padding:5px 11px; cursor:pointer; }
+  button:hover, button:focus-visible { background:#35607f; }
+  button.open, button.act { border-color:var(--blue); }
+  button.on { background:var(--blue); color:#0e141b; }
+  .vw { display:flex; gap:2px; }
+  .vw button { padding:5px 9px; }
+  .panel { background:var(--panel); border:1px solid #2b3b4d; border-radius:4px; padding:10px 12px; margin-bottom:8px; display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; }
+  .panel[hidden] { display:none; }
+  .panel label { color:var(--mute); font-size:.85rem; display:flex; align-items:center; gap:6px; }
+  .pre { display:flex; gap:6px; flex-wrap:wrap; }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-bottom:10px; min-height:0; }
+  .chip { background:#1b3a52; border-color:#2f6188; padding:3px 9px; border-radius:12px; }
+  .clear { background:none; color:var(--blue); text-decoration:underline; }
+  .clear:hover { background:none; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px; }
+  .item { position:relative; display:flex; flex-direction:column; background:var(--card); border-radius:4px; overflow:hidden;
+          color:inherit; text-decoration:none; border:1px solid #2b3b4d; transition:transform .12s, border-color .12s; }
+  .item:hover, .item:focus-visible { transform:translateY(-3px); border-color:var(--blue); }
+  .item img { width:100%; aspect-ratio:460/215; object-fit:cover; background:#101922; display:block; }
+  .rank { position:absolute; top:8px; left:8px; background:rgba(0,0,0,.75); color:#fff; font-size:.75rem; font-weight:700; padding:2px 7px; border-radius:3px; }
+  .body { padding:10px 12px 12px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .title { font-weight:600; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; min-height:2.6em; }
+  .info { color:var(--mute); font-size:.78rem; line-height:1.35; }
+  .buy { margin-top:auto; display:flex; justify-content:flex-end; align-items:stretch; gap:1px; }
+  .off { background:var(--greenbg); color:var(--green); font-weight:700; font-size:1.05rem; padding:4px 8px; display:flex; align-items:center; border-radius:3px 0 0 3px; }
+  .prices { background:#0e141b; padding:2px 10px; text-align:right; display:flex; flex-direction:column; justify-content:center; border-radius:3px; }
+  .off + .prices { border-radius:0 3px 3px 0; }
+  .prices s { color:var(--mute); font-size:.75rem; line-height:1.1; }
+  .prices b { color:var(--green); font-size:.95rem; line-height:1.2; }
+  .grid.list { grid-template-columns:1fr; gap:8px; }
+  .grid.list .item { flex-direction:row; }
+  .grid.list .item:hover { transform:none; }
+  .grid.list .item img { width:170px; flex:none; align-self:flex-start; }
+  .grid.list .title { min-height:0; }
+  .empty { color:var(--mute); padding:20px; background:var(--panel); border-radius:4px; grid-column:1/-1; }
+  footer { color:var(--mute); font-size:.8rem; margin-top:32px; }
+  footer p { margin:6px 0; }
+  @media (max-width:520px) { .grid { grid-template-columns:repeat(2,1fr); gap:10px; } .body { padding:8px; }
+    .grid.list { grid-template-columns:1fr; } .grid.list .item img { width:120px; } .fb { flex-basis:100%; } }
+  @media (prefers-reduced-motion:reduce) { .item { transition:none; } }
 </style>
 </head>
 
@@ -400,473 +80,307 @@
 <header>
 
   <div class="bar">
-
-    <div class="logo">
-      Steam <span>Deals</span>
-    </div>
-
-    <nav class="nav">
-
-      <a href="#free">
-        Free now
-      </a>
-
-      <a href="#cheap" id="nav-cheap">
-        Under ₹250
-      </a>
-
-    </nav>
-
+    <div class="logo">Steam <span>Deals</span></div>
+    <nav class="nav"><a href="#free">100% OFF</a><a href="#cheap" id="nav-cheap">Under ₹250</a></nav>
   </div>
 
 </header>
 
 
 <main>
+  <div class="head"><h2 id="free">100% OFF</h2><span class="meta"><span id="free-count"></span> <span id="updated">Loading…</span></span></div>
+  <div id="free-ui"></div>
+  <div class="grid" id="free-grid"></div>
 
-  <!-- =========================
-       FREE GAMES
-       ========================= -->
-
-  <div class="head">
-
-    <h2 id="free">
-      Free right now
-    </h2>
-
-    <span class="meta" id="free-count">
-      Loading…
-    </span>
-
-  </div>
-
-  <div
-    class="grid"
-    id="free-grid">
-  </div>
-
-
-  <!-- =========================
-       CHEAP GAMES
-       ========================= -->
-
-  <div class="head">
-
-    <h2 id="cheap">
-
-      <span id="cheap-t">
-        Under ₹250
-      </span>
-
-    </h2>
-
-    <span
-      class="meta"
-      id="cheap-count">
-      Loading…
-    </span>
-
-  </div>
-
-  <div
-    class="grid"
-    id="cheap-grid">
-  </div>
-
-
-  <!-- =========================
-       FOOTER
-       ========================= -->
+  <div class="head"><h2 id="cheap"><span id="cheap-t">Under ₹250</span></h2><span class="meta" id="cheap-count"></span></div>
+  <div id="cheap-ui"></div>
+  <div class="grid" id="cheap-grid"></div>
 
   <footer>
-
-    <div>
-      Prices are converted from USD to INR.
-      Steam India prices may differ slightly.
-    </div>
-
-    <div id="rate-info">
-      Exchange rate: Loading…
-    </div>
-
-    <div id="last-update">
-      Last updated: Loading…
-    </div>
-
+    <p>Prices converted from USD; Steam India may differ slightly. Sorting and filters are saved in this browser and apply to each section separately.</p>
+    <p>Sources: GamerPower (free giveaways, claim counts, end dates) and CheapShark (Steam prices, ratings, Metacritic, release dates). "Deal started" is when CheapShark last saw the price change.</p>
+    <p><b>Estimated Rarity</b> is not an official metric: 100 × (1 − log₁₀(1 + Steam reviews) ÷ 5), so fewer reviews means higher rarity and 100,000+ reviews scores 0. Games with no review data have no score.</p>
   </footer>
-
 </main>
 
 
 <script>
+const KEY = "steamdeals.prefs.v1";
+const fmt = n => "₹" + n.toLocaleString("en-IN");
+const Y = new Date().getFullYear(), DAY = 864e5;
+const dt = v => { const t = v ? Date.parse(v) : NaN; return isNaN(t) ? null : t; };
+const yr = v => { const t = dt(v); return t == null ? null : new Date(t).getUTCFullYear(); };
 
-/* ============================================================
-   HELPERS
-   ============================================================ */
+let prefs = {};
+try { prefs = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(prefs)); } catch (e) {} };
 
-const fmt = (number) => {
-
-  if (
-    number === null ||
-    number === undefined ||
-    Number.isNaN(Number(number))
-  ) {
-    return "—";
-  }
-
-  return "₹" + Number(number).toLocaleString("en-IN");
-};
-
-
-/* ============================================================
-   IMAGE FALLBACK
-   ============================================================ */
-
-function setImage(img, url, title) {
-
-  img.alt = title || "";
-
-  if (!url) {
-
-    img.style.display = "none";
-
-    return;
-  }
-
-  img.src = url;
-
-  img.onerror = () => {
-
-    img.style.display = "none";
-
-  };
+/* ---- sort options: shown only when the data has usable (varying) values ---- */
+const SORTS = [
+  { id:"relevance",  label:"Relevance (deal score)",          key:g => g.deal_score, dir:-1 },
+  { id:"rarity",     label:"Estimated Rarity — Rarest First", key:g => g.est_rarity, dir:-1 },
+  { id:"pop",        label:"Popularity — Most Claimed First", key:g => g.claims, dir:-1 },
+  { id:"price_asc",  label:"Current Price — Low to High",     key:g => g.sale_inr, dir:1 },
+  { id:"price_desc", label:"Current Price — High to Low",     key:g => g.sale_inr, dir:-1 },
+  { id:"orig_asc",   label:"Original Price — Low to High",    key:g => g.price_inr, dir:1 },
+  { id:"orig_desc",  label:"Original Price — High to Low",    key:g => g.price_inr, dir:-1 },
+  { id:"off_desc",   label:"Discount % — Highest First",      key:g => g.off, dir:-1 },
+  { id:"off_asc",    label:"Discount % — Lowest First",       key:g => g.off, dir:1 },
+  { id:"save_desc",  label:"Amount Saved — Highest First",    key:g => g.savings_inr, dir:-1 },
+  { id:"save_asc",   label:"Amount Saved — Lowest First",     key:g => g.savings_inr, dir:1 },
+  { id:"rel_new",    label:"Release Date — Newest First",     key:g => dt(g.release_date), dir:-1 },
+  { id:"rel_old",    label:"Release Date — Oldest First",     key:g => dt(g.release_date), dir:1 },
+  { id:"start_new",  label:"Deal Started — Newest First",     key:g => dt(g.deal_start), dir:-1 },
+  { id:"exp_soon",   label:"Deal Expiry — Ending Soon",       key:g => dt(g.expiry_date), dir:1 },
+  { id:"exp_later",  label:"Deal Expiry — Ending Later",      key:g => dt(g.expiry_date), dir:-1 },
+  { id:"name_az",    label:"Game Name — A to Z",              key:g => g.title.toLowerCase(), dir:1 },
+  { id:"name_za",    label:"Game Name — Z to A",              key:g => g.title.toLowerCase(), dir:-1 },
+  { id:"rate_desc",  label:"Steam Rating — Highest First",    key:g => g.rating_pct, dir:-1 },
+  { id:"rate_asc",   label:"Steam Rating — Lowest First",     key:g => g.rating_pct, dir:1 },
+  { id:"rev_desc",   label:"Review Count — Highest First",    key:g => g.review_count, dir:-1 },
+  { id:"meta_desc",  label:"Metacritic Score — Highest First",key:g => g.metacritic, dir:-1 }
+];
+function usable(items, o) {
+  const v = items.map(o.key).filter(x => x != null);
+  return v.length > 0 && new Set(v).size > 1;
+}
+function sortItems(list, id) {
+  const o = SORTS.find(s => s.id === id) || SORTS[0];
+  return list.slice().sort((a, b) => {
+    const x = o.key(a), y = o.key(b);
+    if (x == null && y == null) return 0;
+    if (x == null) return 1;
+    if (y == null) return -1;
+    return (typeof x === "string" ? x.localeCompare(y) : x - y) * o.dir;
+  });
 }
 
+/* ---- filters ---- */
+const NUMK = ["pmin","pmax","dmin","omin","omax","rmin","cmin","mmin","ymin","ymax"];
+const DEALS = { ending:"Ending soon (48h)", new:"New deal (3 days)", long:"Long-running (14+ days)" };
+function pass(g, f) {
+  const ge = (v, m) => m == null || (v != null && v >= m), le = (v, m) => m == null || (v != null && v <= m);
+  const y = yr(g.release_date), now = Date.now(), s = dt(g.deal_start), e = dt(g.expiry_date);
+  if (!ge(g.sale_inr, f.pmin) || !le(g.sale_inr, f.pmax)) return false;
+  if (!ge(g.off, f.dmin)) return false;
+  if (!ge(g.price_inr, f.omin) || !le(g.price_inr, f.omax)) return false;
+  if (!ge(g.rating_pct, f.rmin) || !ge(g.review_count, f.cmin) || !ge(g.metacritic, f.mmin)) return false;
+  if (!ge(y, f.ymin) || !le(y, f.ymax)) return false;
+  if (f.deal === "ending" && !(e != null && e > now && e - now <= 2 * DAY)) return false;
+  if (f.deal === "new" && !(s != null && now - s <= 3 * DAY)) return false;
+  if (f.deal === "long" && !(s != null && now - s >= 14 * DAY)) return false;
+  return true;
+}
+const GROUP_KEYS = { price:["pmin","pmax"], discount:["dmin"], rating:["rmin","cmin"], release:["ymin","ymax"], more:["omin","omax","mmin","deal"] };
+function chipList(f) {
+  const c = [], add = (label, keys) => c.push({ label, keys });
+  const range = (a, b, pre) => a != null && b != null ? `${pre}${a}–${pre}${b}` : a != null ? `${pre}${a}+` : `up to ${pre}${b}`;
+  if (f.pmin === 0 && f.pmax === 0) add("Free", ["pmin","pmax"]);
+  else if (f.pmin != null || f.pmax != null) add("Price " + range(f.pmin, f.pmax, "₹"), ["pmin","pmax"]);
+  if (f.dmin != null) add(`${f.dmin}%+ OFF`, ["dmin"]);
+  if (f.omin != null || f.omax != null) add("Original " + range(f.omin, f.omax, "₹"), ["omin","omax"]);
+  if (f.rmin != null) add(`${f.rmin}%+ positive`, ["rmin"]);
+  if (f.cmin != null) add(`${f.cmin}+ reviews`, ["cmin"]);
+  if (f.mmin != null) add(`Metacritic ${f.mmin}+`, ["mmin"]);
+  if (f.ymin != null || f.ymax != null) add(`Released ${f.ymin ?? "…"}–${f.ymax ?? "…"}`, ["ymin","ymax"]);
+  if (f.deal) add(DEALS[f.deal], ["deal"]);
+  return c;
+}
 
-/* ============================================================
-   RENDER GAMES
-   ============================================================ */
+/* ---- toolbar markup (static strings only) ---- */
+const UI = `
+<div class="tb">
+  <label class="sortl">Sort <select data-sort></select></label>
+  <div class="fb">
+    <button type="button" data-open="price" data-need="price">Price</button>
+    <button type="button" data-open="discount" data-need="discount">Discount</button>
+    <button type="button" data-open="rating" data-need="rating">Rating</button>
+    <button type="button" data-open="release" data-need="release">Release date</button>
+    <button type="button" data-open="more" data-need="more">More filters</button>
+  </div>
+  <div class="vw"><button type="button" data-view="grid" title="Grid view">▦</button><button type="button" data-view="list" title="List view">☰</button></div>
+</div>
+<div class="panel" data-panel="price" data-need="price" hidden><div class="pre" data-pre="price"></div>
+  <label>₹ <input type="number" min="0" placeholder="min" data-k="pmin"> – <input type="number" min="0" placeholder="max" data-k="pmax"></label></div>
+<div class="panel" data-panel="discount" data-need="discount" hidden><div class="pre" data-pre="discount"></div>
+  <label>Min % <input type="number" min="0" max="100" data-k="dmin"></label></div>
+<div class="panel" data-panel="rating" data-need="rating" hidden><div class="pre" data-pre="rating"></div>
+  <label>Min reviews <input type="number" min="0" data-k="cmin"></label></div>
+<div class="panel" data-panel="release" data-need="release" hidden><div class="pre" data-pre="release"></div>
+  <label>Year <input type="number" placeholder="from" data-k="ymin"> – <input type="number" placeholder="to" data-k="ymax"></label></div>
+<div class="panel" data-panel="more" data-need="more" hidden>
+  <label data-need="orig">Original ₹ <input type="number" min="0" placeholder="min" data-k="omin"> – <input type="number" min="0" placeholder="max" data-k="omax"></label>
+  <label data-need="meta">Metacritic ≥ <input type="number" min="0" max="100" data-k="mmin"></label>
+  <label data-need="deal">Deal <select data-k="deal"><option value="">Any</option>
+    <option value="ending">Ending soon (48h)</option><option value="new">New (3 days)</option><option value="long">Long-running (14+ days)</option></select></label>
+</div>
+<div class="chips"></div>`;
 
-function render(id, items, paid) {
+function varies(items, k) { return new Set(items.map(g => g[k]).filter(v => v != null)).size > 1; }
+function has(items, k) { return items.some(g => g[k] != null); }
 
-  const el = document.getElementById(id);
+function Section(id, items, defSort, limit) {
+  const root = document.getElementById(id + "-ui"), grid = document.getElementById(id + "-grid");
+  const countEl = document.getElementById(id + "-count");
+  root.innerHTML = UI;
 
-  if (!Array.isArray(items) || items.length === 0) {
+  const have = {
+    price: varies(items, "sale_inr"), discount: varies(items, "off"),
+    rating: has(items, "rating_pct"), release: has(items, "release_date"),
+    orig: varies(items, "price_inr"), meta: has(items, "metacritic"),
+    deal: has(items, "expiry_date") || has(items, "deal_start")
+  };
+  have.more = have.orig || have.meta || have.deal;
+  if (!has(items, "expiry_date")) root.querySelector('option[value="ending"]').remove();
+  if (!has(items, "deal_start")) root.querySelectorAll('option[value="new"],option[value="long"]').forEach(o => o.remove());
+  root.querySelectorAll("[data-need]").forEach(e => { if (!have[e.dataset.need]) e.remove(); });
 
-    el.innerHTML =
-      '<div class="empty">Nothing here right now.</div>';
+  /* sort dropdown from usable options only */
+  const sel = root.querySelector("[data-sort]");
+  const avail = SORTS.filter(o => o.id.startsWith("name") || usable(items, o));
+  avail.forEach(o => sel.add(new Option(o.label, o.id)));
 
-    return;
+  /* load + sanitise saved prefs */
+  const p = prefs[id] && typeof prefs[id] === "object" ? prefs[id] : {};
+  const st = { sort: p.sort, view: p.view === "list" ? "list" : "grid", f: {} };
+  NUMK.forEach(k => { const v = p.f && p.f[k]; if (typeof v === "number" && isFinite(v)) st.f[k] = v; });
+  if (p.f && DEALS[p.f.deal]) st.f.deal = p.f.deal;
+  if (!avail.some(o => o.id === st.sort)) st.sort = avail.some(o => o.id === defSort) ? defSort : avail[0].id;
+  prefs[id] = st;
+  sel.value = st.sort;
+
+  /* presets */
+  const pricePre = [["Free", { pmin:0, pmax:0 }]];
+  for (let a = 0; a < limit; a += 50) pricePre.push([`₹${a}–${a + 50}`, { pmin:a, pmax:a + 50 }]);
+  const PRE = {
+    price: pricePre,
+    discount: [["90%+", { dmin:90 }], ["75%+", { dmin:75 }], ["50%+", { dmin:50 }], ["25%+", { dmin:25 }]],
+    rating: [["95%+ positive", { rmin:95 }], ["80%+ positive", { rmin:80 }], ["70%+ positive", { rmin:70 }]],
+    release: [["Last 2 years", { ymin:Y - 2 }], ["Last 5 years", { ymin:Y - 5 }], ["2015 or earlier", { ymax:2015 }]]
+  };
+  Object.keys(PRE).forEach(g => {
+    const box = root.querySelector(`[data-pre="${g}"]`);
+    if (!box) return;
+    PRE[g].forEach(([label, set], i) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.textContent = label; b.dataset.g = g; b.dataset.i = i;
+      box.appendChild(b);
+    });
+  });
+
+  const syncInputs = () => root.querySelectorAll("[data-k]").forEach(e => { e.value = st.f[e.dataset.k] ?? ""; });
+  const isOn = set => Object.keys(set).every(k => st.f[k] === set[k]);
+
+  function apply() {
+    const list = sortItems(items.filter(g => pass(g, st.f)), st.sort);
+    draw(grid, list, st, items.length);
+    countEl.textContent = (list.length === items.length ? `${items.length} deals` : `${list.length} of ${items.length}`) + (id === "free" ? " · " : "");
+    grid.className = "grid" + (st.view === "list" ? " list" : "");
+    root.querySelectorAll("[data-pre] button").forEach(b => b.classList.toggle("on", isOn(PRE[b.dataset.g][b.dataset.i][1])));
+    root.querySelectorAll("[data-view]").forEach(b => b.classList.toggle("on", b.dataset.view === st.view));
+    root.querySelectorAll("[data-open]").forEach(b => {
+      const keys = GROUP_KEYS[b.dataset.open];
+      b.classList.toggle("act", keys.some(k => st.f[k] != null));
+    });
+    const cs = chipList(st.f), box = root.querySelector(".chips");
+    box.innerHTML = "";
+    if (cs.length) {
+      const lead = document.createElement("span"); lead.className = "meta"; lead.textContent = "Filters:"; box.appendChild(lead);
+      cs.forEach(c => {
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "chip"; b.textContent = c.label + " ×";
+        b.setAttribute("aria-label", "Remove filter " + c.label);
+        b.onclick = () => { c.keys.forEach(k => delete st.f[k]); syncInputs(); apply(); };
+        box.appendChild(b);
+      });
+      const x = document.createElement("button");
+      x.type = "button"; x.className = "clear"; x.textContent = "Clear all";
+      x.onclick = () => { st.f = {}; syncInputs(); apply(); };
+      box.appendChild(x);
+    }
+    grid.onclick = e => { if (e.target.closest("[data-clear]")) { st.f = {}; syncInputs(); apply(); } };
+    persist();
   }
 
-  el.innerHTML = "";
-
-
-  items.forEach((g, i) => {
-
-    const a = document.createElement("a");
-
-    a.className = "item";
-
-    a.href = g.url || "#";
-
-    a.target = "_blank";
-
-    a.rel = "noopener noreferrer";
-
-
-    /* =========================
-       DISCOUNT
-       ========================= */
-
-    let discount;
-
-    if (paid) {
-
-      const off = Number(g.off);
-
-      discount =
-        Number.isFinite(off)
-          ? `-${off}%`
-          : "SALE";
-
-    } else {
-
-      discount = "-100%";
-
+  sel.onchange = () => { st.sort = sel.value; apply(); };
+  root.addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    if (b.dataset.view) { st.view = b.dataset.view; apply(); }
+    else if (b.dataset.g) {
+      const set = PRE[b.dataset.g][b.dataset.i][1], was = isOn(set);
+      Object.keys(set).forEach(k => delete st.f[k]);
+      if (b.dataset.g === "price") { delete st.f.pmin; delete st.f.pmax; }
+      if (b.dataset.g === "release") { delete st.f.ymin; delete st.f.ymax; }
+      if (!was) Object.assign(st.f, set);
+      syncInputs(); apply();
+    } else if (b.dataset.open) {
+      const panel = root.querySelector(`[data-panel="${b.dataset.open}"]`), show = panel.hidden;
+      root.querySelectorAll("[data-panel]").forEach(x => x.hidden = true);
+      root.querySelectorAll("[data-open]").forEach(x => x.classList.remove("open"));
+      panel.hidden = !show; b.classList.toggle("open", show);
     }
+  });
+  root.addEventListener("input", e => {
+    const k = e.target.dataset.k;
+    if (!k) return;
+    if (k === "deal") { e.target.value ? st.f.deal = e.target.value : delete st.f.deal; }
+    else { const n = parseFloat(e.target.value); isNaN(n) ? delete st.f[k] : st.f[k] = n; }
+    apply();
+  });
+  syncInputs(); apply();
+}
 
-
-    /* =========================
-       CURRENT PRICE
-       ========================= */
-
-    const now = paid
-      ? fmt(g.sale_inr)
-      : "Free";
-
-
-    /* =========================
-       ORIGINAL PRICE
-       ========================= */
-
-    const original = fmt(g.price_inr);
-
-
-    /* =========================
-       CARD
-       ========================= */
-
-    a.innerHTML = `
-
-      <span class="rank">
-        #${i + 1}
-      </span>
-
-      <img
-        loading="lazy"
-        alt=""
-      >
-
-      <div class="body">
-
-        <div class="title"></div>
-
-        <div class="buy">
-
-          <div class="off">
-            ${discount}
-          </div>
-
-          <div class="prices">
-
-            <s>
-              ${original}
-            </s>
-
-            <b>
-              ${now}
-            </b>
-
-          </div>
-
-        </div>
-
-      </div>
-    `;
-
-
-    /* =========================
-       TITLE
-       ========================= */
-
-    const title =
-      a.querySelector(".title");
-
-    title.textContent =
-      g.title || "Unknown game";
-
-
-    /* =========================
-       IMAGE
-       ========================= */
-
-    const img =
-      a.querySelector("img");
-
-    setImage(
-      img,
-      g.image,
-      g.title
-    );
-
-
+/* ---- cards ---- */
+function draw(el, list, st, total) {
+  el.innerHTML = "";
+  if (!list.length) {
+    const d = document.createElement("div");
+    d.className = "empty";
+    d.textContent = total ? "No deals match these filters. " : "Nothing here right now.";
+    if (total) { const b = document.createElement("button"); b.type = "button"; b.dataset.clear = "1"; b.textContent = "Clear filters"; d.appendChild(b); }
+    el.appendChild(d); return;
+  }
+  list.forEach((g, i) => {
+    const a = document.createElement("a");
+    a.className = "item"; a.href = g.url; a.target = "_blank"; a.rel = "noopener";
+    const free = g.sale_inr === 0;
+    a.innerHTML = `<span class="rank">#${i + 1}</span>
+      <img loading="lazy" alt="">
+      <div class="body"><div class="title"></div><div class="info"></div>
+        <div class="buy"><div class="off">-${g.off}%</div>
+        <div class="prices"><s></s><b></b></div></div></div>`;
+    a.querySelector(".title").textContent = g.title;
+    const s = a.querySelector("s");
+    if (g.price_inr) s.textContent = fmt(g.price_inr); else s.remove();
+    a.querySelector("b").textContent = free ? "Free" : fmt(g.sale_inr);
+    const bits = [];
+    if (g.rating_pct != null) bits.push(`${g.rating_pct}%` + (g.review_count ? ` of ${g.review_count.toLocaleString("en-IN")} reviews` : " positive"));
+    if (g.metacritic != null) bits.push(`Metacritic ${g.metacritic}`);
+    if (g.release_date) bits.push(String(yr(g.release_date)));
+    if (g.expiry_date && dt(g.expiry_date)) {
+      const h = (dt(g.expiry_date) - Date.now()) / 36e5;
+      bits.push(h <= 0 ? "Expired" : h < 48 ? `Ends in ${Math.max(1, Math.round(h))}h` : "Ends " + new Date(dt(g.expiry_date)).toLocaleDateString("en-IN", { day:"numeric", month:"short" }));
+    }
+    if (g.claims != null) bits.push(`${g.claims.toLocaleString("en-IN")} claimed`);
+    if (st.sort === "rarity" && g.est_rarity != null) bits.push(`Est. rarity ${g.est_rarity}`);
+    a.querySelector(".info").textContent = bits.join(" · ");
+    const img = a.querySelector("img");
+    img.src = g.image || ""; img.alt = g.title;
+    img.onerror = () => { img.style.visibility = "hidden"; };
     el.appendChild(a);
 
   });
 }
 
-
-/* ============================================================
-   LOAD DATA
-   ============================================================ */
-
-fetch(
-  "data.json",
-  {
-    cache: "no-store"
-  }
-)
-
-.then(response => {
-
-  if (!response.ok) {
-
-    throw new Error(
-      `HTTP ${response.status}`
-    );
-
-  }
-
-  return response.json();
-
-})
-
-.then(data => {
-
-
-  /* ==========================================================
-     LIMIT
-     ========================================================== */
-
-  const limit =
-    Number(data.limit_inr) || 250;
-
-
-  /* ==========================================================
-     NAVIGATION / HEADINGS
-     ========================================================== */
-
-  const limitText =
-    `Under ${fmt(limit)}`;
-
-
-  document.getElementById(
-    "cheap-t"
-  ).textContent = limitText;
-
-
-  document.getElementById(
-    "nav-cheap"
-  ).textContent = limitText;
-
-
-  /* ==========================================================
-     COUNTS
-     ========================================================== */
-
-  const free =
-    Array.isArray(data.free)
-      ? data.free
-      : [];
-
-
-  const cheap =
-    Array.isArray(data.cheap)
-      ? data.cheap
-      : [];
-
-
-  document.getElementById(
-    "free-count"
-  ).textContent =
-    `${free.length} game${free.length === 1 ? "" : "s"}`;
-
-
-  document.getElementById(
-    "cheap-count"
-  ).textContent =
-    `${cheap.length} game${cheap.length === 1 ? "" : "s"} on sale`;
-
-
-  /* ==========================================================
-     RENDER
-     ========================================================== */
-
-  render(
-    "free-grid",
-    free,
-    false
-  );
-
-
-  render(
-    "cheap-grid",
-    cheap,
-    true
-  );
-
-
-  /* ==========================================================
-     EXCHANGE RATE
-     ========================================================== */
-
-  if (
-    data.currency &&
-    data.currency.rate
-  ) {
-
-    document.getElementById(
-      "rate-info"
-    ).textContent =
-      `Exchange rate: $1 = ₹${Number(
-        data.currency.rate
-      ).toFixed(2)}`;
-
-  }
-
-
-  /* ==========================================================
-     LAST UPDATE
-     ========================================================== */
-
-  if (data.updated) {
-
-    const date =
-      new Date(data.updated);
-
-
-    if (!Number.isNaN(date.getTime())) {
-
-      document.getElementById(
-        "last-update"
-      ).textContent =
-        "Last updated: " +
-        date.toLocaleString("en-IN");
-
-    }
-
-  }
-
-})
-
-.catch(error => {
-
-  console.error(
-    "Could not load data.json:",
-    error
-  );
-
-
-  document.getElementById(
-    "free-count"
-  ).textContent =
-    "Could not load data";
-
-
-  document.getElementById(
-    "cheap-count"
-  ).textContent =
-    "Could not load data";
-
-
-  document.getElementById(
-    "free-grid"
-  ).innerHTML =
-    `<div class="empty">
-      Could not load deals. Please try again later.
-    </div>`;
-
-
-  document.getElementById(
-    "cheap-grid"
-  ).innerHTML =
-    `<div class="empty">
-      Could not load deals. Please try again later.
-    </div>`;
-
-});
-
+fetch("data.json", { cache:"no-store" }).then(r => r.json()).then(d => {
+  const limit = d.limit_inr || 250, t = `Under ₹${limit}`;
+  document.getElementById("cheap-t").textContent = t;
+  document.getElementById("nav-cheap").textContent = t;
+  document.getElementById("updated").textContent = "Updated " + new Date(d.updated).toLocaleString("en-IN");
+  Section("free", d.free || [], "orig_desc", limit);
+  Section("cheap", d.cheap || [], "orig_desc", limit);
+}).catch(() => document.getElementById("updated").textContent = "Could not load data.json");
 </script>
 
 </body>

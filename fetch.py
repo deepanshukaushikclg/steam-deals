@@ -1,15 +1,7 @@
-import json
-import re
-import time
-import urllib.request
-import urllib.parse
-import datetime
+import json, math, re, time, urllib.request, urllib.parse, datetime
 
-LIMIT_INR = 250
-
-GAMERPOWER_URL = "https://www.gamerpower.com/api/giveaways?platform=steam&type=game"
-CHEAPSHARK_URL = "https://www.cheapshark.com/api/1.0/deals"
-
+LIMIT_INR = 250      # "Under" section ceiling
+PAGES = 3            # CheapShark pages of 60 deals (polite: 1s pause between)
 
 def get(url):
     req = urllib.request.Request(
@@ -23,8 +15,34 @@ def get(url):
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.load(r)
 
+def iso_unix(ts):
+    try:
+        ts = int(ts)
+        return datetime.datetime.utcfromtimestamp(ts).strftime("%Y-%m-%dT%H:%M:%SZ") if ts > 0 else None
+    except Exception:
+        return None
 
-# ============================================================
+def iso_gp(s):  # GamerPower: "2026-10-01 12:00:00" or "N/A"
+    try:
+        return datetime.datetime.strptime(s.strip(), "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%dT%H:%M:%SZ")
+    except Exception:
+        return None
+
+def posint(x):  # CheapShark uses "0" for "unknown" -> None (never invent values)
+    try:
+        v = int(float(x))
+        return v if v > 0 else None
+    except Exception:
+        return None
+
+def est_rarity(review_count):
+    """Estimated Rarity (0-100): fewer Steam reviews = rarer/more obscure.
+    100 * (1 - log10(1 + reviews) / 5), clamped; 100k+ reviews -> 0.
+    A proxy built from public review counts, NOT an official rarity metric."""
+    if not review_count:
+        return None
+    return round(100 * max(0.0, 1 - math.log10(1 + review_count) / 5), 1)
+
 # USD -> INR
 # ============================================================
 
@@ -51,156 +69,53 @@ try:
 
         if g.get("status") != "Active":
             continue
-
-        title = g.get("title", "").strip()
-
-        # Remove Steam suffix
-        title = re.sub(
-            r"\s*\(Steam\)(\s*Giveaway)?$",
-            "",
-            title,
-            flags=re.IGNORECASE
-        ).strip()
-
-        # "worth" is usually something like "$19.99"
-        worth_text = g.get("worth") or ""
-
-        match = re.search(r"[\d.]+", worth_text)
-
-        if match:
-            try:
-                worth_usd = float(match.group())
-            except ValueError:
-                worth_usd = 0.0
-        else:
-            worth_usd = 0.0
-
-        worth_inr = round(worth_usd * rate)
-
-        free.append({
-            "title": title,
-            "price_inr": worth_inr,
-            "image": g.get("image") or g.get("thumbnail"),
-            "url": g.get("open_giveaway_url")
-        })
-
+        m = re.search(r"[\d.]+", g.get("worth") or "")
+        worth = round((float(m.group()) if m else 0.0) * rate)
+        free.append({"id": "gp-%s" % g.get("id"),
+                     "title": re.sub(r"\s*\(Steam\)( Giveaway)?$", "", g["title"]),
+                     "price_inr": worth, "sale_inr": 0, "off": 100, "savings_inr": worth,
+                     "image": g.get("image") or g.get("thumbnail"),
+                     "url": g["open_giveaway_url"],
+                     "deal_start": iso_gp(g.get("published_date") or ""),
+                     "expiry_date": iso_gp(g.get("end_date") or ""),
+                     "claims": posint(g.get("users"))})   # giveaway claim count = popularity
 except Exception as e:
-    print("GamerPower failed:", e)
+    print("gamerpower failed:", e)
 
-
-# ============================================================
-# STEAM SALES
-# ============================================================
-
-cheap = []
-seen_apps = set()
-
-# Convert ₹250 to USD.
-# Add a tiny buffer because of currency/API rounding.
-max_price_usd = LIMIT_INR / rate + 0.10
-
+# Paid games on sale at or below LIMIT_INR (Steam store = CheapShark storeID 1)
+cheap, ids = [], set()
 try:
-
-    page = 0
-
-    while True:
-
-        params = {
-            "storeID": 1,              # Steam
-            "onSale": 1,               # Only games currently on sale
-            "pageSize": 100,           # More results per request
-            "pageNumber": page,
-            "upperPrice": round(max_price_usd, 2),
-            "sortBy": "Price"
-        }
-
-        url = CHEAPSHARK_URL + "?" + urllib.parse.urlencode(params)
-
-        print("Fetching Steam deals page:", page)
-
-        rows = get(url)
-
-        if not rows:
+    for page in range(PAGES):
+        q = urllib.parse.urlencode({"storeID": 1, "onSale": 1, "pageSize": 60, "pageNumber": page,
+                                    "upperPrice": round(LIMIT_INR / rate, 2), "sortBy": "Price"})
+        deals = get("https://www.cheapshark.com/api/1.0/deals?" + q)
+        if not deals:
             break
-
-        for d in rows:
-
+        for d in deals:
+            sale, normal = float(d["salePrice"]), float(d["normalPrice"])
+            if sale <= 0 or not d.get("steamAppID") or d["dealID"] in ids:
+                continue
+            ids.add(d["dealID"])
+            reviews = posint(d.get("steamRatingCount"))
             try:
-                sale_usd = float(d.get("salePrice", 0))
-                normal_usd = float(d.get("normalPrice", 0))
-            except (TypeError, ValueError):
-                continue
-
-            app_id = d.get("steamAppID")
-
-            # We need a Steam App ID to link to the game.
-            if not app_id:
-                continue
-
-            # Avoid duplicates
-            if app_id in seen_apps:
-                continue
-
-            # Ignore invalid prices
-            if sale_usd <= 0:
-                continue
-
-            # IMPORTANT:
-            # Check the actual INR sale price ourselves.
-            sale_inr = sale_usd * rate
-
-            if sale_inr > LIMIT_INR:
-                continue
-
-            seen_apps.add(app_id)
-
-            normal_inr = normal_usd * rate
-
-            if normal_usd > 0:
-                discount = round(
-                    (1 - sale_usd / normal_usd) * 100
-                )
-            else:
-                discount = 0
-
-            cheap.append({
-                "title": d.get("title", "").strip(),
-
-                # Original price
-                "price_inr": round(normal_inr),
-
-                # Current sale price
-                "sale_inr": round(sale_inr),
-
-                # USD values are useful if you want them later
-                "price_usd": round(normal_usd, 2),
-                "sale_usd": round(sale_usd, 2),
-
-                "off": discount,
-
-                "image": (
-                    "https://cdn.akamai.steamstatic.com/"
-                    f"steam/apps/{app_id}/header.jpg"
-                ),
-
-                "url": (
-                    "https://store.steampowered.com/app/"
-                    + str(app_id)
-                ),
-
-                "steam_app_id": str(app_id)
-            })
-
-        # If fewer than pageSize results are returned,
-        # we've reached the final page.
-        if len(rows) < 100:
-            break
-
-        page += 1
-
-        # Prevent hammering the API
-        time.sleep(0.3)
-
+                score = float(d.get("dealRating")) or None
+            except Exception:
+                score = None
+            cheap.append({"id": "cs-%s" % d["steamAppID"], "title": d["title"],
+                          "price_inr": round(normal * rate), "sale_inr": round(sale * rate),
+                          "off": round((1 - sale / normal) * 100) if normal else 0,
+                          "savings_inr": round((normal - sale) * rate),
+                          "image": "https://cdn.akamai.steamstatic.com/steam/apps/%s/header.jpg" % d["steamAppID"],
+                          "url": "https://store.steampowered.com/app/" + d["steamAppID"],
+                          "release_date": iso_unix(d.get("releaseDate")),
+                          "deal_start": iso_unix(d.get("lastChange")),   # when price last changed
+                          "rating_pct": posint(d.get("steamRatingPercent")),
+                          "rating_text": d.get("steamRatingText") or None,
+                          "review_count": reviews,
+                          "metacritic": posint(d.get("metacriticScore")),
+                          "deal_score": score,
+                          "est_rarity": est_rarity(reviews)})
+        time.sleep(1)
 except Exception as e:
     print("CheapShark failed:", e)
 
