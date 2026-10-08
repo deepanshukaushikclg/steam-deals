@@ -1,4 +1,4 @@
-import json, re, urllib.request, urllib.parse, datetime
+import json, re, time, urllib.request, urllib.parse, datetime
 
 LIMIT_INR = 250
 
@@ -29,21 +29,27 @@ except Exception as e:
     print("gamerpower failed:", e)
 
 # Paid games on sale at or below LIMIT_INR (Steam store = CheapShark storeID 1)
-cheap = []
+cheap, seen_ids = [], set()
 try:
-    q = urllib.parse.urlencode({"storeID": 1, "onSale": 1, "pageSize": 60,
-                                "upperPrice": round(LIMIT_INR / rate, 2),
-                                "sortBy": "Price"})
-    for d in get("https://www.cheapshark.com/api/1.0/deals?" + q):
-        sale, normal = float(d["salePrice"]), float(d["normalPrice"])
-        if sale <= 0 or not d.get("steamAppID"):
-            continue
-        cheap.append({"title": d["title"],
-                      "price_inr": round(normal * rate),
-                      "sale_inr": round(sale * rate),
-                      "off": round((1 - sale / normal) * 100) if normal else 0,
-                      "image": "https://cdn.akamai.steamstatic.com/steam/apps/%s/header.jpg" % d["steamAppID"],
-                      "url": "https://store.steampowered.com/app/" + d["steamAppID"]})
+    for page in range(60):
+        q = urllib.parse.urlencode({"storeID": 1, "onSale": 1, "pageSize": 60, "pageNumber": page,
+                                    "upperPrice": round(LIMIT_INR / rate, 2), "sortBy": "Price"})
+        rows = get("https://www.cheapshark.com/api/1.0/deals?" + q)
+        for d in rows:
+            sale, normal = float(d["salePrice"]), float(d["normalPrice"])
+            app = d.get("steamAppID")
+            if sale <= 0 or not app or app in seen_ids:
+                continue
+            seen_ids.add(app)
+            cheap.append({"title": d["title"],
+                          "price_inr": round(normal * rate),
+                          "sale_inr": round(sale * rate),
+                          "off": round((1 - sale / normal) * 100) if normal else 0,
+                          "image": "https://cdn.akamai.steamstatic.com/steam/apps/%s/header.jpg" % app,
+                          "url": "https://store.steampowered.com/app/" + app})
+        if len(rows) < 60:
+            break
+        time.sleep(0.3)
 except Exception as e:
     print("cheapshark failed:", e)
 
